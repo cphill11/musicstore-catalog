@@ -1,7 +1,7 @@
 package com.trilogyed.musicstorecatalog.controller;
 
 import com.trilogyed.musicstorecatalog.model.Artist;
-import com.trilogyed.musicstorecatalog.model.Label;
+
 import com.trilogyed.musicstorecatalog.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +28,7 @@ public class ArtistController {
     public List<Artist> getAllArtists() {
         return repo.findAll();
     }
+
     // as shown by Dan's heroku-coffee example
     // get Artist by ID
     @GetMapping("{id}")
