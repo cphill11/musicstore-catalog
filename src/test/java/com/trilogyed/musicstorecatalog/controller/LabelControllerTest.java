@@ -4,15 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trilogyed.musicstorecatalog.model.Label;
 import com.trilogyed.musicstorecatalog.repository.LabelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,14 +22,12 @@ import java.util.Optional;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(LabelController.class)
-//@AutoConfigureMockMvc(addFilters = false)
 public class LabelControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -52,7 +47,7 @@ public class LabelControllerTest {
 
     private String allLabelsJson;
 
-
+    // from Project 1
     @Before
     public void setup() throws Exception {
         // input
@@ -72,7 +67,7 @@ public class LabelControllerTest {
         allLabelsJson = mapper.writeValueAsString(allLabels);
     }
 
-    //from work done with RSVP-Service
+    // from work done with RSVP-Service
     // Mock create method
     @Test
     public void shouldCreateNewLabelOnPostRequest() throws Exception {
