@@ -13,8 +13,7 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "album")
 public class Album implements Serializable {
-    public Album() {
-    }
+    public Album() {    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
