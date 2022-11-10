@@ -102,7 +102,7 @@ public class ArtistControllerTest {
 
     // Mock get all method
     @Test
-    public void shouldReturnAllLabels() throws Exception {
+    public void shouldReturnAllArtists() throws Exception {
         doReturn(allArtists).when(repo).findAll();
 
         mockMvc.perform(

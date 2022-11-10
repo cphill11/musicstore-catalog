@@ -1,32 +1,33 @@
-package com.trilogyed.musicstorecatalog.controller;
 
+package com.trilogyed.musicstorecatalog.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.trilogyed.musicstorecatalog.model.Album;
+
 import com.trilogyed.musicstorecatalog.repository.AlbumRepository;
-import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(AlbumController.class)
@@ -38,7 +39,6 @@ public class AlbumControllerTest {
 
     @MockBean
     private AlbumRepository repo;
-
     @Autowired
     private ObjectMapper mapper;
 
@@ -55,7 +55,7 @@ public class AlbumControllerTest {
         musicStoreAlbum = new Album();
         musicStoreAlbum.setTitle("I need sleep");
         musicStoreAlbum.setArtistId(2);
-        musicStoreAlbum.setReleaseDate();
+        musicStoreAlbum.setReleaseDate(LocalDate.ofEpochDay(1999-04-10));
         musicStoreAlbum.setLabelId(16);
         musicStoreAlbum.setListPrice(new BigDecimal("9.99"));
 
@@ -66,7 +66,7 @@ public class AlbumControllerTest {
         album.setId(1L);
         album.setTitle("I need sleep");
         album.setArtistId(2L);
-//        album.setReleaseDate();
+        album.setReleaseDate(LocalDate.ofEpochDay(1999-04-10));
         album.setLabelId(16L);
         album.setListPrice(new BigDecimal("9.99"));
 
@@ -82,7 +82,7 @@ public class AlbumControllerTest {
         inputAlbum.setId(1L);
         inputAlbum.setTitle("I need sleep");
         inputAlbum.setArtistId(2L);
-//        inputAlbum.setReleaseDate();
+        inputAlbum.setReleaseDate(LocalDate.ofEpochDay(1999-04-10));
         inputAlbum.setLabelId(16L);
         inputAlbum.setListPrice(new BigDecimal("9.99"));
 
@@ -98,58 +98,44 @@ public class AlbumControllerTest {
 
     }
 
+    // Mock get by ID method
+    @Test
+    public void shouldReturnAlbumById() throws Exception {
+        doReturn(Optional.of(musicStoreAlbum)).when(repo).findById(1L);
 
-//    @Test
-//    public void shouldReturnAlbumById() throws Exception {
-//        doReturn(Optional.of(musicStoreAlbum)).when(repo).findById(1L);
-//
-//        ResultActions result = mockMvc.perform(
-//                        get("/album/1"))
-//                .andExpect(status().isOk())
-//                .andExpect((content().json(musicStoreJson))
-//                );
-//    }
-//
-//////    @Test
-//////    public void shouldReturnAlbumOnValidGetRequest() throws Exception {
-//////
-//////        // options?  makes me use findByID
-//////        doReturn(allAlbums).when(repo).findByTitle("I need sleep");
-//////
-//////        mockMvc.perform(
-//////                        get("/album/{title}")
-//////                                .contentType(MediaType.APPLICATION_JSON)
-//////                )
-//////                .andDo(print())
-//////                .andExpect(status().isOk())
-//////                .andExpect(content().json(allAlbumsJson)
-//////                );
-//////    }
-//////
-//////    @Test
-//////    public void shouldReturnAllAlbums() throws Exception {
-//////        doReturn(allAlbums).when(repo).findAll();
-//////
-//////        mockMvc.perform(
-//////                        get("/album"))
-//////                .andExpect(status().isOk())
-//////                .andExpect(content().json(allAlbumsJson)
-//////                );
-//////    }
-//////
-//////    @Test
-//////    public void shouldUpdateByIdAndReturn204StatusCode() throws Exception {
-//////        mockMvc.perform(
-//////                        put("/album")
-//////                                .content(musicStoreJson)
-//////                                .contentType(MediaType.APPLICATION_JSON)
-//////                )
-//////                .andExpect(status().isNoContent());
-//////    }
-//////
-//////    @Test
-//////    public void shouldDeleteByIdAndReturn204StatusCode() throws Exception {
-//////        mockMvc.perform(delete("/album/1")).andExpect(status().isNoContent());
-//////    }
-////
+        ResultActions result = mockMvc.perform(
+                        get("/album/1"))
+                .andExpect(status().isOk())
+                .andExpect((content().json(musicStoreJson))
+                );
+    }
+
+
+    // Mock get all method
+    @Test
+    public void shouldReturnAllAlbums() throws Exception {
+        doReturn(allAlbums).when(repo).findAll();
+
+        mockMvc.perform(
+                        get("/album"))
+                .andExpect(status().isOk());
+    }
+
+    // Mock update method
+    @Test
+    public void shouldUpdateByIdAndReturn204StatusCode() throws Exception {
+        mockMvc.perform(
+                        put("/album")
+                                .content(musicStoreJson)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isNoContent());
+    }
+
+    // Mock delete method
+    @Test
+    public void shouldDeleteByIdAndReturn204StatusCode() throws Exception {
+        mockMvc.perform(delete("/album/1")).andExpect(status().isNoContent());
+    }
+
 }
