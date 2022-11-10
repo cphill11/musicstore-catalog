@@ -128,5 +128,4 @@ public class LabelControllerTest {
     public void shouldDeleteByIdAndReturn204StatusCode() throws Exception {
         mockMvc.perform(delete("/label/1")).andExpect(status().isNoContent());
     }
-
 }
