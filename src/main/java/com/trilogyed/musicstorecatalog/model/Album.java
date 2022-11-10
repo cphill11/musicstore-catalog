@@ -1,11 +1,17 @@
 package com.trilogyed.musicstorecatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,9 +32,10 @@ public class Album implements Serializable {
     @Column(name = "artist_id")
     private long artistId;
 
-    @NotNull
-    @Column(name = "release_date")
-    private Date releaseDate;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate releaseDate;
 
     @NotNull
     @Column(name = "label_id")
@@ -38,7 +45,7 @@ public class Album implements Serializable {
     @Column(name = "list_price")
     private BigDecimal listPrice;
 
-    public Album(long id, String title, long artistId, Date releaseDate, long labelId, BigDecimal listPrice) {
+    public Album(long id, String title, long artistId, LocalDate releaseDate, long labelId, BigDecimal listPrice) {
         this.id = id;
         this.title = title;
         this.artistId = artistId;
@@ -71,11 +78,11 @@ public class Album implements Serializable {
         this.artistId = artistId;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
