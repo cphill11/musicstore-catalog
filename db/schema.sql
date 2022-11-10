@@ -1,7 +1,3 @@
-drop database if exists music_store_catalog;
-create database music_store_catalog;
-use music_store_catalog;
-
 create table label (
     label_id int primary key auto_increment,
     `name` varchar(50) not null,
